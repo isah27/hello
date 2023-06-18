@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "912792494785",
+    "project_id": "authentication-19156",
+    "storage_bucket": "authentication-19156.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:912792494785:android:f74b68b86f89bf3c52ea40",
+        "android_client_info": {
+          "package_name": "com.example.auth_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "912792494785-b6fe77v2t0kemun36grshf9j7pf6me01.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5ZgcyVxNgXCiXf4XuHAnDYI9okAgvo3g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "912792494785-b6fe77v2t0kemun36grshf9j7pf6me01.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "912792494785-01og05v8201p79k2mjs5jv1ul0jgri88.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.authApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:912792494785:android:55377e26d243546b52ea40",
+        "android_client_info": {
+          "package_name": "com.example.swift_access"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "912792494785-b6fe77v2t0kemun36grshf9j7pf6me01.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5ZgcyVxNgXCiXf4XuHAnDYI9okAgvo3g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "912792494785-b6fe77v2t0kemun36grshf9j7pf6me01.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "912792494785-01og05v8201p79k2mjs5jv1ul0jgri88.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.authApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
