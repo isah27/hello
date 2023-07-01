@@ -32,15 +32,14 @@ class _HomePageState extends State<HomePage> {
         child: SafeArea(
           child: ListView(
             children: [
-              UserInfoBanner(
+              UserName(
                 size: size,
-                username: "${watchBloc.user.username}",
+                username: "${watchBloc.user.username??"Nazzy"}",
               ),
               SizedBox(height: size.height * 0.01),
               // acct balance
               AcctBalance(
                 size: size,
-                acctBallance: "${watchBloc.user.acctBalance}",
                 user: watchBloc.user,
               ),
 
@@ -59,13 +58,17 @@ class _HomePageState extends State<HomePage> {
               PaymentoptionBtn(
                 size: size,
                 imgPath: ImageAssets.airtimeIcon,
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoute.buyAirtime);
+                },
                 text: 'Buy Airtime',
               ),
               PaymentoptionBtn(
                 size: size,
                 imgPath: ImageAssets.dataIcon,
-                onTap: () {},
+                onTap: () {
+                     Navigator.pushNamed(context, AppRoute.buyData);
+                },
                 text: 'Buy Data',
               ),
               PaymentoptionBtn(
@@ -82,13 +85,17 @@ class _HomePageState extends State<HomePage> {
               PaymentoptionBtn(
                 size: size,
                 imgPath: ImageAssets.tvSubIcon,
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoute.cableTv);
+                },
                 text: 'TV Subscription',
               ),
               PaymentoptionBtn(
                 size: size,
                 imgPath: ImageAssets.electricityIcon,
-                onTap: () {},
+                onTap: () {
+                   Navigator.pushNamed(context, AppRoute.electrictyBill);
+                },
                 text: 'Electricity Bills',
               ),
               PaymentoptionBtn(
@@ -115,14 +122,14 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: SizedBox(
-        height: size.height * 0.07,
+        height: size.height * 0.08,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             BottomNavButton(
               size: size,
               icon: Icons.home,
-              elevation: currentPage == "home" ? 10 : 0,
+              elevation: currentPage == "home" ? 6 : 0,
               text: 'Home',
               onTap: () {
                 setState(() {
@@ -133,7 +140,7 @@ class _HomePageState extends State<HomePage> {
             BottomNavButton(
               size: size,
               icon: Icons.stars_outlined,
-              elevation: currentPage == "Reward" ? 10 : 0,
+              elevation: currentPage == "Reward" ? 6 : 0,
               text: 'Reward',
               onTap: () {
                 setState(() {
@@ -144,7 +151,7 @@ class _HomePageState extends State<HomePage> {
             BottomNavButton(
               size: size,
               icon: Icons.account_circle_outlined,
-              elevation: currentPage == "Profile" ? 10 : 0,
+              elevation: currentPage == "Profile" ? 6 : 0,
               text: 'Profile',
               onTap: () {
                 setState(() {

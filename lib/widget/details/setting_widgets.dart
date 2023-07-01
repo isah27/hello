@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:swift_access/uitils/app_colors.dart';
 import 'package:swift_access/widget/app_widget.dart';
 
 class DescAndBackNav extends StatelessWidget {
@@ -7,11 +8,12 @@ class DescAndBackNav extends StatelessWidget {
     super.key,
     required this.size,
     required this.text,
+    this.fontColor=Colors.black87,
   });
 
   final Size size;
   final String text;
-
+  final Color fontColor;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -21,15 +23,15 @@ class DescAndBackNav extends StatelessWidget {
             onTap: () => Navigator.pop(context),
             child: Icon(
               Icons.chevron_left,
-              color: Colors.white,
+              color: fontColor,
               size: 35.sp,
             ),
           ),
-          SizedBox(width: size.width * 0.24),
+          SizedBox(width: size.width * 0.04),
           AppText(
             text: text,
             size: 18.sp,
-            textColor: Colors.white,
+            textColor:fontColor,
             fontWeight: FontWeight.w600,
           ),
         ],

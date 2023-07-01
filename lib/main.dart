@@ -41,9 +41,11 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
             title: 'Swift Access',
             debugShowCheckedModeBanner: false,
+
             locale: DevicePreview.locale(context),
             builder: DevicePreview.appBuilder,
             theme: ThemeData(
+              useMaterial3: true,
               primarySwatch: Colors.amber,
             ),
             onGenerateRoute: AppRoute.onGeneratedRoute,

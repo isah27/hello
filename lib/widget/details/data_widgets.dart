@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:swift_access/page%20route/detail/route.dart';
+import 'package:swift_access/uitils/app_colors.dart';
 import 'package:swift_access/widget/app_widget.dart';
 
+import '../../uitils/images.dart';
+import '../../uitils/strings.dart';
 import '../../uitils/usefull_function.dart';
 
 class DataPackage extends StatelessWidget {
@@ -107,55 +111,180 @@ class NetworkButton extends StatelessWidget {
 }
 
 Future<void> confirmTransaction(BuildContext context, Size size,
-    {required String text}) async {
+    {required String productTitle,required String productSubTitle,
+    required String productPrice}) async {
   return showModalBottomSheet(
       context: context,
+      backgroundColor: Colors.transparent,
       builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: EdgeInsets.all(size.width * 0.08),
-              child: AppText(
-                text: text,
-                textColor: Colors.black,
-                size: 12.sp,
-                fontWeight: FontWeight.w600,
+        return  Container(
+            padding: EdgeInsets.all(size.width*0.04),
+            decoration: BoxDecoration(
+              color: AppColors.whiteColor,
+              borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(size.width*0.03),
+              topRight: Radius.circular(size.width*0.03)
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child:   Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(
-                  width: size.width * 0.3,
-                  child: AppButton(
-                      size: size,
-                      text: "Cancel",
-                      bgColor: Colors.red.shade900,
-                      textSize: 12.sp,
-                      textColor: Colors.white,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AppText(
+                      text: "Confirm Purchase",
+                      textColor: AppColors.blackColor,
+                      size: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    GestureDetector(
                       onTap: () {
-                        Navigator.pop(context);
-                      }),
+                        
+                      },
+                      child:GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child:  Icon(Icons.cancel,size: 20.sp,)))
+                  ],
                 ),
-                SizedBox(
-                  width: size.width * 0.3,
-                  child: AppButton(
-                      size: size,
-                      text: "Proceed",
-                      bgColor: Colors.blue.shade900,
-                      textSize: 12.sp,
-                      textColor: Colors.white,
-                      onTap: () {}),
+                SizedBox(height: size.height*0.02),
+                Row(
+                  children: [
+                    AppText(text: "Product",
+                    fontWeight: FontWeight.w500,size: 14.sp,
+                    textColor: AppColors.blackColor,),
+                  ],
                 ),
+                 SizedBox(height: size.height*0.02),
+                 ColumnFillContainer(size: size, title:productTitle,
+                  subTitle:productSubTitle),
+                   SizedBox(height: size.height*0.02),
+                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children:[
+                      AppText(text: "Price:",size: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      textColor: AppColors.blackColor,),
+                      AppText(text:"${Strings.nairaign}$productPrice",size: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      textColor: AppColors.blackColor,),
+                    ]
+                   ),
+                    SizedBox(height: size.height*0.01),
+                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children:[
+                      AppText(text: "Discount:",size: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      textColor: AppColors.blackColor,),
+                      AppText(text: "-${Strings.nairaign}${UsefulFunction.calculateDiscount(price:int.parse(productPrice))}",
+                      size: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      textColor: AppColors.darkYellowColor,),
+                    ]
+                   ),
+                    SizedBox(height: size.height*0.01),
+                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children:[
+                      AppText(text: "Amount to be paid:",size: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      textColor: AppColors.blackColor,),
+                      AppText(text: "${Strings.nairaign}${UsefulFunction.calculateDiscountedPrice(price: int.parse(productPrice))}",size: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      textColor: AppColors.blackColor,),
+                    ]
+                   ),
+                     SizedBox(height: size.height * 0.03),
+               AppButton(
+                          size: size,
+                          text: "PAY ${UsefulFunction.calculateDiscountedPrice(price: int.parse(productPrice))}",
+                          validated: true,
+                          bgColor: AppColors.lightYellowColor,
+                          textSize: 12.sp,
+                          textColor: AppColors.blackColor,
+                          onTap: () {
+
+                            Navigator.pop(context);
+                             transactionResponse(context, size, imgPath: ImageAssets.successIcon ,
+                             title: "Top-up Successful",
+                             description:productSubTitle=="TV Subscription"||productSubTitle=="Electricity"?"Thanks for using Swift Access":
+                              "08029533423 will be credited Shortly.\nThanks for using Swift Access");
+                            //  transactionResponse(context, size, imgPath: ImageAssets.failedIcon ,
+                            //  title: "Airtime Top-up Failed",
+                            //  description: "Error: Biller Inactive.\nPlease check back later");
+                          }),
+              
               ],
             ),
-            SizedBox(height: size.height * 0.1),
-          ],
-        );
+                   
+          );
       });
 }
 
+Future<void> transactionResponse(BuildContext context, Size size,
+    {required String imgPath ,required String title,
+    required String description}) async {
+  return showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return Container(
+          padding: EdgeInsets.all(size.width*0.04),
+          decoration: BoxDecoration(
+            color: AppColors.whiteColor,
+            borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(size.width*0.03),
+            topRight: Radius.circular(size.width*0.03)
+            ),
+          ),
+          child:   Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  AppText(
+                    text: title,
+                    textColor: AppColors.blackColor,
+                    size: 16.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      
+                    },
+                    child:GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child:  Icon(Icons.cancel,size: 20.sp,)))
+                ],
+              ),
+              SizedBox(height: size.height*0.02),
+               Image.asset(imgPath,height: size.width*0.4,fit: BoxFit.fill,),
+                SizedBox(height: size.height*0.02),
+                AppText(text: description,
+                textAlign: TextAlign.center,
+                fontWeight: FontWeight.w500,
+                size: 14.sp,textColor: AppColors.blackColor,
+                ),
+                   SizedBox(height: size.height * 0.03),
+             AppButton(
+                        size: size,
+                        text: "BACK TO HOME",
+                        validated: true,
+                        bgColor: AppColors.lightYellowColor,
+                        textSize: 12.sp,
+                        textColor: AppColors.blackColor,
+                        onTap: () {
+                          Navigator.pushNamedAndRemoveUntil(context, AppRoute.home,(route)=>false);
+                        }),
+            
+            ],
+          ),
+                 
+        );
+      });
+}
 class NetWorks extends StatelessWidget {
   const NetWorks({
     super.key,
@@ -229,27 +358,29 @@ dynamic modalBottomOptions({
   showModalBottomSheet(
       context: context,
       builder: (context) {
-        return Column(
+        return ListView(
           children: [
             AppText(
               text: description,
               size: 14.sp,
-              textColor: Colors.black87,
+              textColor: AppColors.blackColor,
               fontWeight: FontWeight.w600,
             ),
-            SingleChildScrollView(
-              child: Column(
-                children: List.generate(
-                    names.length,
-                    (index) => NetWorks(
-                          index: index,
-                          currentIndex: currentIndex,
-                          size: size,
-                          imgUrl: imgUrl.isEmpty ? "" : imgUrl[index],
-                          name: names[index],
-                          onTap: () => onChange(index),
-                        )),
-              ),
+            Column(
+              children: List.generate(
+                  names.length,
+                  (index) =>
+                  PaymentoptionBtn(size: size, onTap: (){}, imgPath: imgUrl[index], text: names[index])
+                  
+                  //  NetWorks(
+                  //       index: index,
+                  //       currentIndex: currentIndex,
+                  //       size: size,
+                  //       imgUrl: imgUrl.isEmpty ? "" : imgUrl[index],
+                  //       name: names[index],
+                  //       onTap: () => onChange(index),
+                  //     ),
+                      ),
             ),
           ],
         );

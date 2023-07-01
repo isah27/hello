@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'package:swift_access/uitils/app_colors.dart';
 
@@ -86,6 +87,7 @@ class AppText extends StatelessWidget {
           fontSize: size,
           color: textColor,
           fontWeight: fontWeight,
+          fontFamilyFallback:[ DefaultTextStyle.of(context).style.fontFamilyFallback?.first??"roboto"],
           decoration: TextDecoration.none),
     );
   }

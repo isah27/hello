@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:swift_access/uitils/app_colors.dart';
+import 'package:swift_access/uitils/images.dart';
+import 'package:swift_access/uitils/strings.dart';
 import 'package:swift_access/widget/app_widget.dart';
 
 class TransactionsPage extends StatefulWidget {
@@ -17,77 +20,22 @@ class _TransactionsPageState extends State<TransactionsPage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.blue.shade900,
+      backgroundColor: AppColors.whiteColor,
       body: Column(
         children: [
           SizedBox(height: size.height * 0.02),
-          DescAndBackNav(text: "Transactions", size: size),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.all(size.width * 0.04),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade100,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(size.width * 0.1),
-                  // topRight: Radius.circular(size.width * 0.1),
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  InkWell(
-                    onTap: () {},
-                    child: Container(
-                      padding: EdgeInsets.all(size.width * 0.02),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: Colors.black26,
-                          width: 0.5,
-                        ),
-                        borderRadius: BorderRadius.circular(size.width * 0.02),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              AppText(
-                                text:
-                                    "N100 AIRTEL Airtime Top Up with\n08029533425",
-                                size: 12.sp,
-                                textColor: Colors.black87,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(size.width * 0.01),
-                                decoration: BoxDecoration(
-                                  color: Colors.green.shade800,
-                                  borderRadius:
-                                      BorderRadius.circular(size.width * 0.02),
-                                ),
-                                child: AppText(
-                                  text: "Successful",
-                                  size: 11.sp,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              )
-                            ],
-                          ),
-                          const Divider(),
-                          AppText(
-                            text: "2023-05-03 - 16:09 PM",
-                            size: 12.sp,
-                            textColor: Colors.black87,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+          DescAndBackNav(text: "Transaction History",fontColor: AppColors.blackColor, size: size),
+          Padding(
+            padding: EdgeInsets.all(size.width * 0.04),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                PaymentoptionBtn(imgPath: ImageAssets.airtimeIcon,
+                trailingImgUrl: ImageAssets.airtelIcon,text: "Airtime Purchased",
+                subTitle:"${Strings.nairaign}2000  26:06:2023 (08029533423)" ,  size: size,onTap: () {
+                  
+                },),
+              ]
             ),
           ),
         ],

@@ -23,6 +23,7 @@ class _LoginPageState extends State<LoginPage> {
     final size = MediaQuery.of(context).size;
     final watchBloc = context.watch<AuthBloc>();
     final readBloc = context.read<AuthBloc>();
+    
     return Scaffold(
       backgroundColor: AppColors.darkYellowColor,
       body: BlocListener<AuthBloc, SwiftAccessStates>(
@@ -88,9 +89,10 @@ class _LoginPageState extends State<LoginPage> {
                           size: size,
                           bgColor: AppColors.darkYellowColor,
                           onTap: () async {
-                            if (formkey.currentState!.validate()) {
-                              readBloc.loginEvent();
-                            }
+                            // if (formkey.currentState!.validate()) {
+                            //   readBloc.loginEvent();
+                            // }
+                            Navigator.pushNamed(context, AppRoute.home);
                           },
                         ),
                         SizedBox(height: size.height * 0.02),

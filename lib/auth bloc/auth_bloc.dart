@@ -22,7 +22,7 @@ class AuthBloc extends Cubit<SwiftAccessStates> {
   TextEditingController emailController = TextEditingController(text: "" ?? "");
   final phoneNoController = TextEditingController();
   final addressController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController passwordController = TextEditingController(text: "123");
   Users localUser = Users();
   bool formValidated = false;
   loadApp() async {

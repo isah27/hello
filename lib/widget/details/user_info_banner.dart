@@ -7,8 +7,8 @@ import 'package:swift_access/uitils/usefull_function.dart';
 
 import '../app_widget.dart';
 
-class UserInfoBanner extends StatelessWidget {
-  const UserInfoBanner({
+class UserName extends StatelessWidget {
+  const UserName({
     super.key,
     required this.size,
     required this.username,

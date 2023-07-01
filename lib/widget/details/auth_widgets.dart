@@ -143,9 +143,10 @@ class SignUpTextField extends StatelessWidget {
 class FieldDescription extends StatelessWidget {
   const FieldDescription({
     super.key,
-    required this.desc,
+    required this.desc, this.color,
   });
   final String desc;
+  final Color? color;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -153,8 +154,8 @@ class FieldDescription extends StatelessWidget {
         AppText(
           text: desc,
           size: 12.sp,
-          fontWeight: FontWeight.w500,
-          textColor: Colors.black.withOpacity(0.6),
+          fontWeight: FontWeight.w600,
+          textColor:color?? Colors.black.withOpacity(0.6),
         ),
       ],
     );

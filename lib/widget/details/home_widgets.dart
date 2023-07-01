@@ -7,116 +7,18 @@ import 'package:swift_access/uitils/app_colors.dart';
 import 'package:swift_access/uitils/images.dart';
 import 'package:swift_access/widget/app_widget.dart';
 import 'package:clipboard/clipboard.dart';
+import '../../uitils/strings.dart';
 import '../../uitils/usefull_function.dart';
-
-class BankInfo extends StatelessWidget {
-  const BankInfo({
-    super.key,
-    required this.size,
-    required this.bankName,
-    required this.acctHolderName,
-    required this.acctNumber,
-  });
-
-  final Size size;
-  final String bankName;
-  final String acctHolderName;
-  final String acctNumber;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(size.width * 0.04),
-      margin: EdgeInsets.symmetric(horizontal: size.width * 0.01),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.amber.shade900,
-            Colors.amber.shade900,
-            Colors.amber.shade600,
-          ],
-          begin: Alignment.centerLeft,
-          end: Alignment.bottomRight,
-          tileMode: TileMode.mirror,
-        ),
-        borderRadius: BorderRadius.circular(size.width * 0.02),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  AppText(
-                    text: acctNumber,
-                    size: 14.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  SizedBox(width: size.width * 0.08),
-                  InkWell(
-                    onTap: () {
-                      FlutterClipboard.copy(acctNumber).then((value) =>
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("$acctNumber copied"))));
-                    },
-                    child: Icon(
-                      Icons.copy,
-                      color: Colors.white,
-                      size: 16.sp,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: size.height * 0.01),
-              AppText(
-                text: "ACCOUNT NAME",
-                size: 12.sp,
-                fontWeight: FontWeight.w300,
-              ),
-              SizedBox(height: size.height * 0.01),
-              AppText(
-                text: acctHolderName,
-                size: 14.sp,
-                fontWeight: FontWeight.w500,
-              ),
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: size.height * 0.04),
-              AppText(
-                text: "₦50 charge",
-                size: 12.sp,
-                textColor: Colors.transparent,
-                fontWeight: FontWeight.w400,
-              ),
-              SizedBox(height: size.height * 0.01),
-              AppText(
-                text: bankName,
-                size: 14.sp,
-                fontWeight: FontWeight.w500,
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
 
 class AcctBalance extends StatefulWidget {
   const AcctBalance({
     super.key,
     required this.size,
-    required this.acctBallance,
     required this.user,
   });
 
   final Size size;
-  final String acctBallance;
+
   final Users user;
 
   @override
@@ -155,7 +57,7 @@ class _AcctBalanceState extends State<AcctBalance> {
                   AppText(
                     text: !visible
                         ? "***"
-                        : "₦${UsefulFunction.currencyConverter(price: double.parse(widget.acctBallance != "" ? widget.acctBallance : "0"))}",
+                        : "${Strings.nairaign}${UsefulFunction.currencyConverter(price: double.parse(widget.user.acctBalance != "" ? widget.user.acctBalance! : "0"))}",
                     size: 25.sp,
                     fontWeight: FontWeight.w700,
                     textColor: AppColors.whiteColor,
@@ -164,9 +66,14 @@ class _AcctBalanceState extends State<AcctBalance> {
               ),
               Column(
                 children: [
-                  AppText(
-                    text: "View History",
-                    textColor: AppColors.lightYellowColor,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, AppRoute.transactions);
+                    },
+                    child: AppText(
+                      text: "View History",
+                      textColor: AppColors.lightYellowColor,
+                    ),
                   ),
                   SizedBox(height: widget.size.height * 0.02),
                   InkWell(
@@ -329,13 +236,13 @@ class ColumnFillContainer extends StatelessWidget {
             visible: copyVisible,
             child: InkWell(
               onTap: () {
-                FlutterClipboard.copy(title).then(
-                    (value) => Fluttertoast.showToast(msg: "$title copied"));
+                FlutterClipboard.copy("title").then(
+                    (value) => Fluttertoast.showToast(msg: "copied"));
               },
               child: Icon(
                 Icons.copy_outlined,
                 color: AppColors.darkYellowColor,
-                size: 20.sp,
+                size: 18.sp,
               ),
             ),
           ),
@@ -576,32 +483,46 @@ class PaymentoptionBtn extends StatelessWidget {
     required this.imgPath,
     required this.text,
     this.subTitle,
+    this.trailingImgUrl,
+    this.bgColor,
+    this.trailingText,
+    this.secondSubText,
+    this.firstSubTextColor,
   });
 
   final Size size;
   final Function() onTap;
   final String imgPath;
   final String text;
+  final String? trailingText;
+  final String? secondSubText;
+  final Color? firstSubTextColor;
   final String? subTitle;
+  final String? trailingImgUrl;
+  final Color? bgColor;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => onTap(),
       child: Container(
+        width: size.width,
         margin: EdgeInsets.symmetric(vertical: size.height * 0.01),
         padding: EdgeInsets.symmetric(
             horizontal: size.width * 0.03, vertical: size.height * 0.01),
         decoration: BoxDecoration(
-          color: AppColors.textBorderColor,
+          color: bgColor ?? AppColors.textBorderColor,
           borderRadius: BorderRadius.circular(size.width * 0.03),
         ),
         child: Row(
           children: [
-            Image.asset(
-              imgPath,
-              height: size.width * 0.1,
-              width: size.width * 0.1,
-              fit: BoxFit.fill,
+            Visibility(
+              visible: imgPath != "",
+              child: Image.asset(
+                imgPath,
+                height: size.width * 0.1,
+                width: size.width * 0.1,
+                fit: BoxFit.fill,
+              ),
             ),
             SizedBox(width: size.width * 0.04),
             Column(
@@ -610,19 +531,145 @@ class PaymentoptionBtn extends StatelessWidget {
                 AppText(
                   text: text,
                   fontWeight: FontWeight.w500,
-                  size: 11.sp,
+                  size: 14.sp,
                   textColor: AppColors.blackColor,
                 ),
-                Visibility(
-                  visible: subTitle != null,
-                  child: AppText(
-                    text: subTitle ?? "",
-                    fontWeight: FontWeight.w500,
-                    size: 9.sp,
-                    textColor: AppColors.blackColor,
-                  ),
+                Row(
+                  children: <Widget>[
+                    Visibility(
+                      visible: subTitle != null,
+                      child: AppText(
+                        text: subTitle ?? "",
+                        fontWeight: FontWeight.w500,
+                        size: 10.sp,
+                        textColor:secondSubText!=null?Colors.red: AppColors.blackColor,
+                      ),
+                    ),
+                     Visibility(
+                      visible: secondSubText != null,
+                      child: AppText(
+                        text: String.fromCharCode(8358)+ "     ₦",
+                        fontWeight: FontWeight.w500,
+                        size: 10.sp,
+                        textColor:AppColors.blackColor,
+                      ),
+                    ),
+                  ],
                 ),
               ],
+            ),
+            Expanded(child: Container()),
+            Visibility(
+              visible: trailingImgUrl != null,
+              child: Image.asset(
+                trailingImgUrl ?? "",
+                height: size.width * 0.1,
+                width: size.width * 0.1,
+                fit: BoxFit.fill,
+              ),
+            ),
+            Visibility(
+              visible: trailingText != null,
+              child: AppText(
+                text: "Duration  $trailingText",
+                fontWeight: FontWeight.w500,
+                size: 9.sp,
+                textColor: AppColors.blackColor,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// data package option widget
+
+
+class DataPackageOptionBtn extends StatelessWidget {
+  const DataPackageOptionBtn({
+    super.key,
+    required this.size,
+    required this.onTap,
+    required this.imgPath,
+    required this.text,
+    required this.subTitle,
+    this.bgColor,
+    required this.trailingText,
+    this.secondSubText,
+  });
+
+  final Size size;
+  final Function() onTap;
+  final String imgPath;
+  final String text;
+  final String trailingText;
+  final String? secondSubText;
+  final int subTitle;
+  final Color? bgColor;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => onTap(),
+      child: Container(
+        width: size.width,
+        margin: EdgeInsets.symmetric(vertical: size.height * 0.01),
+        padding: EdgeInsets.symmetric(
+            horizontal: size.width * 0.03, vertical: size.height * 0.01),
+        decoration: BoxDecoration(
+          color:bgColor??  AppColors.textBorderColor,
+          borderRadius: BorderRadius.circular(size.width * 0.03),
+        ),
+        child: Row(
+          children: [
+            Visibility(
+              visible: imgPath != "",
+              child: Image.asset(
+                imgPath,
+                height: size.width * 0.1,
+                width: size.width * 0.1,
+                fit: BoxFit.fill,
+              ),
+            ),
+            SizedBox(width: size.width * 0.04),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppText(
+                  text: text,
+                  fontWeight: FontWeight.w500,
+                  size: 14.sp,
+                  textColor: AppColors.blackColor,
+                ),
+                Row(
+                  children: <Widget>[
+                    AppText(
+                      text: "${Strings.nairaign}$subTitle",
+                      fontWeight: FontWeight.w500,
+                      size: 10.sp,
+                      textColor:Colors.red,
+                    ),
+                     AppText(
+                       text: "  Pay ${Strings.nairaign}${UsefulFunction.calculateDiscountedPrice(price: subTitle)}",
+                       fontWeight: FontWeight.w500,
+                       size: 10.sp,
+                       textColor:AppColors.blackColor,
+                     ),
+                  ],
+                ),
+              ],
+            ),
+            Expanded(child: Container()),
+           
+            Visibility(
+              visible: trailingText != null,
+              child: AppText(
+                text: "Duration  $trailingText",
+                fontWeight: FontWeight.w500,
+                size: 9.sp,
+                textColor: AppColors.blackColor,
+              ),
             ),
           ],
         ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:swift_access/uitils/app_colors.dart';
 import 'package:swift_access/widget/app_widget.dart';
+import 'package:swift_access/widget/details/utility_bills_widget.dart';
 
 class ElectricityBillPage extends StatefulWidget {
   const ElectricityBillPage({super.key});
@@ -23,126 +25,133 @@ class _ElectricityBillPageState extends State<ElectricityBillPage> {
   int currentIndex = 0;
   final cableController = TextEditingController();
   final meterController = TextEditingController();
+  final meterNumberController = TextEditingController();
+  final amountController = TextEditingController();
+  final phoneNumberController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.red.shade900,
-      body: Column(
+      backgroundColor:AppColors.whiteColor,
+      body: ListView(
         children: [
           SizedBox(height: size.height * 0.02),
           DescAndBackNav(
               text: "Electricity Bill Payment",
               size: Size(size.width * 0.3, size.height)),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.all(size.width * 0.04),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade100,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(size.width * 0.1),
-                  // topRight: Radius.circular(size.width * 0.1),
+          Container(
+            height: size.height*0.88,
+            width: size.width,
+            padding: EdgeInsets.all(size.width * 0.04),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // SizedBox(height: size.height * 0.03),
+                FieldDescription(
+                  desc: "Select Disco Company",
+                  color: AppColors.blackColor,
                 ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                SizedBox(height: size.height * 0.005),
+                InkWell(
+                  onTap: ()async {
+                   final index=await optionsDialog(
+                      context: context,
+                      size: size,
+                      names: companyNames,
+                      images: [],
+                      desc: "Select Disco company",
+                      currentIndex: currentIndex,
+                     
+                    );
+                    setState(() {
+                          cableController.text = companyNames[index];
+                          currentIndex = index;
+                        });
+                  },
+                  child:SelectionButton(size: size, text:cableController.text )
+                ),
+                 SizedBox(height: size.height * 0.03),
+                FieldDescription(
+                  desc: "Select meter type",
+                  color: AppColors.blackColor,
+                ),
+                SizedBox(height: size.height * 0.005),
+                InkWell(
+                  onTap: ()async {
+                   final index=await optionsDialog(
+                      context: context,
+                      size: size,
+                      names: meterTypes,
+                      images: [],
+                      desc: "Select Meter Type",
+                      currentIndex: currentIndex,
+                     
+                    );
+                    setState(() {
+                          meterController.text = meterTypes[index];
+                          currentIndex = index;
+                        });
+                  },
+                  child:SelectionButton(size: size, text:meterController.text )
+                ),
+               
                   SizedBox(height: size.height * 0.03),
-                  InkWell(
+                FieldDescription(
+                  desc: "Enter Meter Number",
+                  color: AppColors.blackColor,
+                ),
+                SizedBox(height: size.height * 0.005),
+                AppTextField(
+                  size: size,
+                  fillColor: AppColors.textBorderColor,
+                  hintText: "Meter Number",
+                  controller:meterNumberController,
+                  keyboardType: TextInputType.phone,
+                ),
+                                 SizedBox(height: size.height * 0.03),
+                FieldDescription(
+                  desc: "Prefered Amount",
+                  color: AppColors.blackColor,
+                ),
+                SizedBox(height: size.height * 0.005),
+                AppTextField(
+                  size: size,
+                  fillColor: AppColors.textBorderColor,
+                  hintText: "Amount",
+                  controller:amountController,
+                  keyboardType: TextInputType.phone,
+                ),
+                SizedBox(height: size.height * 0.03),
+                FieldDescription(
+                  desc: "Phone Number",
+                  color: AppColors.blackColor,
+                ),
+                SizedBox(height: size.height * 0.005),
+                AppTextField(
+                  size: size,
+                  fillColor: AppColors.textBorderColor,
+                  hintText: "Phone number",
+                  controller: phoneNumberController,
+                  keyboardType: TextInputType.phone,
+                ),
+              const Spacer(),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
+                  child: AppButton(
+                    size: size,
+                    text: "Validate Meter",
+                    validated: true,
+                    bgColor: AppColors.lightYellowColor,
                     onTap: () {
-                      modalBottomOptions(
-                        context: context,
-                        size: size,
-                        names: companyNames,
-                        imgUrl: [],
-                        description: "Select the disco company",
-                        currentIndex: currentIndex,
-                        onChange: (index) {
-                          setState(() {
-                            cableController.text = companyNames[index];
-                            currentIndex = index;
-                          });
-                        },
+                      confirmTransaction(context, size,
+                      productPrice: "2000",
+                      productTitle: "Enugu Electricity",
+                      productSubTitle: "Electricity",
                       );
-                    },
-                    child: AppTextField(
-                      icon: Icons.arrow_drop_down,
-                      size: size,
-                      fillColor: Colors.white,
-                      hintText: "Select disco company",
-                      enable: false,
-                      controller: cableController,
-                      keyboardType: TextInputType.phone,
-                    ),
+                          },
                   ),
-                  SizedBox(height: size.height * 0.03),
-                  InkWell(
-                    onTap: () {
-                      modalBottomOptions(
-                        context: context,
-                        size: size,
-                        names: meterTypes,
-                        imgUrl: [],
-                        description: "Select the meter type",
-                        currentIndex: currentIndex,
-                        onChange: (index) {
-                          setState(() {
-                            meterController.text = meterTypes[index];
-                            currentIndex = index;
-                          });
-                        },
-                      );
-                    },
-                    child: AppTextField(
-                      size: size,
-                      fillColor: Colors.white,
-                      enable: false,
-                      hintText: "Select meter type",
-                      controller: meterController,
-                      keyboardType: TextInputType.number,
-                      icon: Icons.arrow_drop_down,
-                    ),
-                  ),
-                  SizedBox(height: size.height * 0.03),
-                  AppTextField(
-                    size: size,
-                    fillColor: Colors.white,
-                    hintText: "Meter Number",
-                    controller: TextEditingController(),
-                    keyboardType: TextInputType.phone,
-                  ),
-                  SizedBox(height: size.height * 0.03),
-                  AppTextField(
-                    size: size,
-                    fillColor: Colors.white,
-                    hintText: "Amount",
-                    controller: TextEditingController(),
-                    keyboardType: TextInputType.phone,
-                  ),
-                  SizedBox(height: size.height * 0.03),
-                  AppTextField(
-                    size: size,
-                    fillColor: Colors.white,
-                    hintText: "Customer Phone",
-                    controller: TextEditingController(),
-                    keyboardType: TextInputType.phone,
-                  ),
-                  SizedBox(height: size.height * 0.03),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-                    child: AppButton(
-                      size: size,
-                      text: "Validate Meter",
-                      bgColor: Colors.red.shade900,
-                      onTap: () {
-                        confirmTransaction(context, size,
-                            text:
-                                "You are about to purchase ₦200 airtime for 03083527825");
-                      },
-                    ),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
           ),
         ],

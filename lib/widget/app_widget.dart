@@ -5,4 +5,5 @@ export './details/auth_widgets.dart';
 export './details/home_widgets.dart';
 export './details/setting_widgets.dart';
 export './details/data_widgets.dart';
+export './details/airtime_widget.dart';
 

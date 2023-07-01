@@ -7,7 +7,14 @@ class UsefulFunction {
     final currencyFormatter = NumberFormat("#,##0.00", "en_US");
     return currencyFormatter.format(price);
   }
-
+  static dynamic calculateDiscountedPrice({required int price}){
+    final discountPrice=price*0.02;
+    return price-discountPrice;
+  }
+    static dynamic calculateDiscount({required int price}){
+   
+    return price*0.02;
+  }
   static double sizeAble(
       {required double size, required BuildContext context}) {
     if (MediaQuery.of(context).size.width < 810) {
@@ -22,4 +29,13 @@ class UsefulFunction {
         ? "Morning"
         : "Good Day";
   }
+
+
+  static successMessage({transactionType}){
+    const airtimeTitle="Airtime Top-up Successful";
+    const airtimeDesc="08029533423 will be credited Shortly.\nThanks for using Swift Access";
+  
+
+  }
+
 }

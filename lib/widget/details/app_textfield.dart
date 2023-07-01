@@ -19,6 +19,7 @@ class AppTextField extends StatelessWidget {
     this.textSize = 10,
     this.icon,
     this.onChange,
+    this.borderColor=Colors.white,
   }) : super(key: key);
 
   final Size size;
@@ -29,12 +30,13 @@ class AppTextField extends StatelessWidget {
   final TextEditingController controller;
   final bool enable;
   final Color? fillColor;
+  final Color borderColor;
   final TextAlign align;
   final TextInputType keyboardType;
   final IconData? icon;
   final Function()? onChange;
   late final border = OutlineInputBorder(
-      borderSide: const BorderSide(color: Colors.white),
+      borderSide:  BorderSide(color: borderColor),
       borderRadius: BorderRadius.circular(
         borderRadius == 0 ? size.width * 0.02 : borderRadius,
       ));
@@ -46,7 +48,9 @@ class AppTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+     
       width: size.width,
+     
       child: TextFormField(
         enabled: enable,
         controller: controller,
